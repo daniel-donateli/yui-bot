@@ -7,7 +7,11 @@ const app = {
   dolar_hoje: {},
   client: client,
   update: async function () {
-    this.dolar_hoje = await getDollarToday();
+    try {
+      this.dolar_hoje = await getDollarToday();
+    } catch (e) {
+      console.error(e);
+    }
   },
   setup: async function () {
     const commandFiles = fs.readdirSync(__dirname + "/commands").filter((
@@ -19,7 +23,7 @@ const app = {
       client.commands.set(command.name, command);
     }
 
-    this.update();
+    await this.update();
   },
   run: async function () {
     this.client.once("ready", () => {

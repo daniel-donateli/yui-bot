@@ -2,7 +2,7 @@ let date_obj = new Date();
 
 const date = {
   year: date_obj.getFullYear(),
-  month: date_obj.getMonth(),
+  month: date_obj.getMonth() + 1,
   day: date_obj.getDate(),
 };
 

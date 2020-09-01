@@ -13,3 +13,12 @@ $npm start
 ```shell
 $yarn install 
 $yarn run start
+```
+
+## Commands
+
+* !ping
+* !help
+* !dolarhoje
+* !reload
+* !play (only youtube links, no queries)

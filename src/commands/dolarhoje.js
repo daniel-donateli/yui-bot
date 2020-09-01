@@ -15,7 +15,7 @@ module.exports = {
   cooldown: 5,
   execute(message, args, dolar) {
     message.channel.send(
-      `Valor do dólar:\nCompra: ${dolar.compra}\nVenda: ${dolar.venda}\nAtualizado em: ${dolar.dataCotacao}`,
+      `Valor do dólar:\nCompra: R$${dolar.compra}\nVenda: R$${dolar.venda}\nAtualizado em: ${dolar.dataCotacao}`,
     );
   },
 };
