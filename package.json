@@ -15,8 +15,6 @@
     "distube": "^2.5.1",
     "ffmpeg-static": "^4.2.7",
     "isomorphic-fetch": "^2.2.1",
-    "moment": "^2.27.0",
-    "ytdl-core": "^3.2.2",
-    "ytsr": "^0.1.21"
+    "moment": "^2.27.0"
   }
 }

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const getDollarToday = require("./libs/dollar-today");
-const { client, cooldowns, collection } = require("./bot");
+const { client, cooldowns, collection, distube } = require("./bot");
 const { token, prefix } = require("../config");
 
 console.log("Initializing...");
@@ -8,6 +8,7 @@ console.log("Initializing...");
 const app = {
   dolar_hoje: {},
   client: client,
+  distube: distube,
   update: async function () {
     console.log("Fetching...");
     try {
@@ -92,6 +93,13 @@ const app = {
         if (command.name === "dolarhoje") {
           command.execute(msg, args, this.dolar_hoje);
           this.update();
+        } else if (command.name === "play") {
+          command.execute(msg, args, this.distube);
+        } else if (
+          command.name === "pause" || command.name === "resume" ||
+          command.name === "stop"
+        ) {
+          command.execute(msg, this.distube);
         } else {
           command.execute(msg, args);
         }
@@ -100,6 +108,35 @@ const app = {
         msg.reply("Houve um erro ao executar este comando");
       }
     });
+
+    this.distube
+      .on("playSong", (message, queue, song) => {
+        message.channel.send(
+          `Tocando \`${song.name}\` - \`${song.formattedDuration}\`\nRequerido por: ${song.user}\n`,
+        );
+      });
+
+    this.distube.on("addSong", (message, queue, song) => {
+      message.channel.send(
+        `Adicionado ${song.name} - \`${song.formattedDuration}\` a fila por ${song.user}`,
+      );
+    });
+
+    this.distube.on(
+      "empty",
+      (message) => message.channel.send("Canal vazio. Pegando a foda fora"),
+    );
+
+    this.distube.on("error", (message, err) =>
+      message.channel.send(
+        "Houve um erro: " + err,
+      ));
+
+    this.distube.on(
+      "finish",
+      (message) => message.channel.send("Sem músicas na fila"),
+    );
+
     this.client.login(token);
   },
 };

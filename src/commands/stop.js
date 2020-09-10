@@ -1,12 +1,12 @@
 module.exports = {
-  name: "play",
+  name: "stop",
   aliases: [],
-  description: "Toca uma música do youtube",
-  args: true,
+  description: "Para a execução de música",
+  args: false,
   guildOnly: true,
-  usage: " <Youtube link or Song name>",
+  usage: " ",
   cooldown: 5,
-  execute(message, args, distube) {
+  execute(message, distube) {
     const voiceChannel = message.member.voice.channel;
 
     if (!voiceChannel) {
@@ -15,8 +15,10 @@ module.exports = {
       );
     }
 
-    distube.play(message, args.join(" ")).catch((err) => {
-      console.error(err);
-    });
+    try {
+      distube.stop(message);
+    } catch (e) {
+      console.error(e);
+    }
   },
 };
