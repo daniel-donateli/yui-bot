@@ -1,10 +1,19 @@
 require("isomorphic-fetch");
-const date = require("./date");
+const moment = require("moment");
+
+const now = moment();
+if (now.day() === 0) {
+  now.subtract(2, "days");
+} else if (now.day() === 6) {
+  console.log("entrou no if 2");
+  now.subtract(1, "days");
+}
+const date = `${now.month() + 1}-${now.date()}-${now.year()}`;
 
 const getDollarToday = () => {
   return new Promise((resolve, reject) => {
     fetch(
-      `https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date.lastWorkDay()}'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao`,
+      `https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$top=100&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao`,
     )
       .then((response) => response.json())
       .then((data) => {

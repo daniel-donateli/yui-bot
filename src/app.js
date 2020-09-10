@@ -3,10 +3,13 @@ const getDollarToday = require("./libs/dollar-today");
 const { client, cooldowns, collection } = require("./bot");
 const { token, prefix } = require("../config");
 
+console.log("Initializing...");
+
 const app = {
   dolar_hoje: {},
   client: client,
   update: async function () {
+    console.log("Fetching...");
     try {
       this.dolar_hoje = await getDollarToday();
     } catch (e) {
@@ -14,15 +17,17 @@ const app = {
     }
   },
   setup: async function () {
+    console.log("Setting up...");
+    console.log("Loading files...");
     const commandFiles = fs.readdirSync(__dirname + "/commands").filter((
       file,
     ) => file.endsWith(".js"));
-
+    console.log("Loading commands...");
     for (const file of commandFiles) {
       const command = require(`./commands/${file}`);
       client.commands.set(command.name, command);
     }
-
+    console.log("Updating state...");
     await this.update();
   },
   run: async function () {
