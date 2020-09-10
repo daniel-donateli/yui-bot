@@ -21,4 +21,7 @@ $yarn run start
 * !help
 * !dolarhoje
 * !reload
-* !play (only youtube links, no queries)
+* !play
+* !pause
+* !resume
+* !stop
